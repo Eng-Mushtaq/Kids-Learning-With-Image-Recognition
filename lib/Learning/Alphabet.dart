@@ -15,15 +15,13 @@ class _AlphabetState extends State<Alphabet> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Colors.deepPurple[500],
         elevation: 0,
-        iconTheme: const IconThemeData(
-          color: Colors.black,
-        ),
-        backgroundColor: Colors.purple[50],
-        title: const Center(
+        title: Center(
             child: Text(
           'Alphabet',
-          style: TextStyle(color: Colors.black, fontFamily: "arlrdbd"),
+          style: TextStyle(color: Colors.white, fontFamily: "arlrdbd"),
         )),
       ),
       body: Padding(
@@ -41,7 +39,7 @@ class _AlphabetState extends State<Alphabet> {
               int index,
             ) {
               return InkWell(
-                splashColor: Colors.redAccent,
+                splashColor: Colors.deepPurple[200],
                 onTap: () {
                   print(kidslist);
                   Navigator.push(
@@ -51,18 +49,31 @@ class _AlphabetState extends State<Alphabet> {
                       ));
                 },
                 child: Card(
-                    color: const Color.fromARGB(255, 233, 213, 255),
-                    elevation: 5,
-                    margin: const EdgeInsets.all(10),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    shadowColor: Colors.purpleAccent,
-                    child: Center(
-                      child: Image.asset(
+                  color: Colors.purple[50],
+                  elevation: 4,
+                  margin: const EdgeInsets.all(10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  shadowColor: Colors.deepPurple[300],
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
                         kidslist[index].image!,
                         height: 120,
                       ),
-                    )),
+                      Text(
+                        kidslist[index].Text!,
+                        style: const TextStyle(
+                          color: Colors.deepPurple,
+                          fontFamily: "arlrdbd",
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               );
             },
           ),

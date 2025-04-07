@@ -35,17 +35,14 @@ class _BottomNavState extends State<BottomNav> {
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            //  icon: ImageIcon(AssetImage("assets/images/12Icon feather-settings.png")),
             icon: Icon(Icons.settings),
             label: 'Setting',
           ),
           BottomNavigationBarItem(
-            // icon: ImageIcon(AssetImage("assets/images/12Group 1.png")),
             icon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            // icon: ImageIcon(AssetImage("assets/images/privacy.png")),
             icon: Icon(Icons.privacy_tip_outlined),
             label: 'Privacy',
           ),

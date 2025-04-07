@@ -12,8 +12,7 @@ class _SettingState extends State<Setting> {
   final flutterWebviewPlugin = new PrivacyPolicy();
 
   _openMap() async {
-    const url =
-        "https://play.google.com/store/apps/details?id=" + "com.example.kids";
+    const url = "https://play.google.com/store/apps/details?id=" + "";
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -30,9 +29,9 @@ class _SettingState extends State<Setting> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
-          color: Colors.black,
+          color: Colors.white,
         ),
-        backgroundColor: const Color.fromARGB(255, 233, 213, 255),
+        backgroundColor: Colors.deepPurple[500],
         elevation: 0,
       ),
       body: Container(
@@ -44,9 +43,9 @@ class _SettingState extends State<Setting> {
                 children: [
                   Container(
                       height: size.height * 0.3 - 27,
-                      decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 233, 213, 255),
-                          borderRadius: BorderRadius.only(
+                      decoration: BoxDecoration(
+                          color: Colors.deepPurple[500],
+                          borderRadius: const BorderRadius.only(
                               bottomLeft: Radius.circular(36),
                               bottomRight: Radius.circular(36))),
                       child: Padding(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:kids_learning/utils/model.dart';
 
 class AlphaSound extends StatefulWidget {
@@ -29,25 +30,25 @@ class _AlphaSoundState extends State<AlphaSound> {
       await flutterTts.speak(kidslist[count].Text);
     }
 
-    final _controller =  PageController();
+    final _controller = new PageController();
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.black,
+        iconTheme: IconThemeData(
+          color: Colors.white,
         ),
-        backgroundColor: Colors.purple[50],
+        backgroundColor: Colors.deepPurple[500],
         elevation: 0,
-        title: const Center(
+        title: Center(
           child: Text(
             'Alphabet',
-            style: TextStyle(color: Colors.black, fontFamily: "arlrdbd"),
+            style: TextStyle(color: Colors.white, fontFamily: "arlrdbd"),
           ),
         ),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height * 600,
         width: MediaQuery.of(context).size.height * 1000,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
               fit: BoxFit.fitHeight,
               image: AssetImage("assets/images/Union 12.png")),
@@ -62,14 +63,14 @@ class _AlphaSoundState extends State<AlphaSound> {
                   children: [
                 Flexible(
                   child: Card(
-                    margin: const EdgeInsets.all(20),
+                    margin: EdgeInsets.all(20),
                     elevation: 5,
-                    shadowColor: Colors.purpleAccent,
+                    shadowColor: Colors.redAccent,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     child: PageView.builder(
                       controller: _controller,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       itemCount: kidslist.length,
                       itemBuilder: (BuildContext context, int index1) {
                         return Center(
@@ -106,7 +107,7 @@ class _AlphaSoundState extends State<AlphaSound> {
                                 }
                                 _speak();
                               },
-                              child: const Image(
+                              child: Image(
                                 image: AssetImage(
                                     'assets/images/11MaskGroup5.png'),
                               ),
@@ -120,7 +121,7 @@ class _AlphaSoundState extends State<AlphaSound> {
                                 }
                                 _speak();
                               },
-                              child: const Image(
+                              child: Image(
                                 image: AssetImage(
                                     'assets/images/11MaskGroup4.png'),
                               ),

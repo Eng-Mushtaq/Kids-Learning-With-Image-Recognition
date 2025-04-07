@@ -6,7 +6,7 @@ import 'package:kids_learning/utils/model.dart';
 
 class NumberSound extends StatefulWidget {
   int index1;
-  NumberSound(this.index1, {super.key});
+  NumberSound(this.index1);
   @override
   State<NumberSound> createState() => _NumberSoundState();
 }
@@ -29,18 +29,21 @@ class _NumberSoundState extends State<NumberSound> {
     final _controller = new PageController();
     return Scaffold(
         appBar: AppBar(
-          elevation: 0,
-          title: const Text(
-            'Number',
-            style: TextStyle(color: Colors.black, fontFamily: "arlrdbd"),
+          iconTheme: IconThemeData(
+            color: Colors.white,
           ),
-          backgroundColor: Colors.purple[50],
+          elevation: 0,
+          title: Text(
+            'Number',
+            style: TextStyle(color: Colors.white, fontFamily: "arlrdbd"),
+          ),
+          backgroundColor: Colors.deepPurple[500],
         ),
         body: Container(
           height: 650,
           width: 500,
-          decoration: const BoxDecoration(
-            image: const DecorationImage(
+          decoration: BoxDecoration(
+            image: DecorationImage(
                 fit: BoxFit.fitHeight,
                 image: AssetImage("assets/images/Union 12.png")),
           ),
@@ -52,14 +55,14 @@ class _NumberSoundState extends State<NumberSound> {
                   children: [
                 Flexible(
                     child: Card(
-                  margin: const EdgeInsets.all(20),
+                  margin: EdgeInsets.all(20),
                   elevation: 5,
-                  shadowColor: Colors.purpleAccent,
+                  shadowColor: Colors.redAccent,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   child: PageView.builder(
                     controller: _controller,
-                    physics: const NeverScrollableScrollPhysics(),
+                    physics: NeverScrollableScrollPhysics(),
                     itemCount: list.length,
                     itemBuilder: (BuildContext context, int index1) {
                       return Row(
@@ -100,7 +103,7 @@ class _NumberSoundState extends State<NumberSound> {
                             }
                             _speak();
                           },
-                          child: const Image(
+                          child: Image(
                             image: AssetImage('assets/images/11MaskGroup5.png'),
                           ),
                         ),
@@ -113,7 +116,7 @@ class _NumberSoundState extends State<NumberSound> {
                             }
                             _speak();
                           },
-                          child: const Image(
+                          child: Image(
                             image: AssetImage('assets/images/11MaskGroup4.png'),
                           ),
                         ),
