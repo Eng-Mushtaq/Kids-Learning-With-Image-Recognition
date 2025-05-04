@@ -1,18 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Pages/LetsStartLearning.dart';
 import 'Pages/LookAndChooes.dart';
 import 'Pages/VideoLearning.dart';
 import 'Pages/listen_and_guess.dart';
-import 'package:kids_learning/Learning/Animals.dart';
-import 'package:kids_learning/Learning/Brids.dart';
-import 'package:kids_learning/Learning/Flowers.dart';
-import 'package:kids_learning/Learning/Fruit.dart';
-import 'package:kids_learning/Learning/Month.dart';
-import 'package:kids_learning/Learning/Vegitable.dart';
-import 'package:kids_learning/ObjectDetection/object_detection_screen.dart';
-import 'package:kids_learning/RealTimeDetection/real_time_detection_screen.dart';
-import 'package:kids_learning/RealTimeDetection/tflite_detection_screen.dart';
+import 'object_detection/object_detector_view.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -138,89 +129,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisSpacing: 15,
                         childAspectRatio: 0.85,
                       ),
-                      itemCount: 6,
+                      itemCount: 5,
                       itemBuilder: (context, index) {
                         return _buildGridItem(context, index);
                       },
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 5.0),
-                    child: InkWell(
-                      splashColor: Colors.deepPurple[200],
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TFLiteDetectionScreen(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Colors.amber[50],
-                          border:
-                              Border.all(color: Colors.amber[200]!, width: 2),
-                        ),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                width: 80,
-                                height: 80,
-                                decoration: BoxDecoration(
-                                  color: Colors.amber[100],
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(
-                                  Icons.auto_awesome,
-                                  size: 45,
-                                  color: Colors.amber[800],
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Advanced Detection',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontFamily: "arlrdbd",
-                                      color: Colors.amber[800],
-                                    ),
-                                  ),
-                                  SizedBox(height: 4),
-                                  Text(
-                                    'Better detect animals, vegetables & fruits',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: "arlrdbd",
-                                      color: Colors.grey[700],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Icon(
-                                Icons.arrow_forward_ios,
-                                color: Colors.amber[800],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
@@ -238,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => LetsStartLearning(index!)));
+                    builder: (context) => LetsStartLearning(index)));
           },
           child: Container(
             decoration: BoxDecoration(
@@ -353,117 +268,31 @@ class _HomeScreenState extends State<HomeScreen> {
 
       case 4:
         return InkWell(
-          splashColor: Colors.deepPurple[200],
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ObjectDetectionScreen(),
-              ),
-            );
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-              color: Colors.purple[50],
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.camera_alt,
-                  size: 90,
-                  color: Colors.deepPurple,
-                ),
-                Container(
-                  height: 45,
-                  width: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.purple[100],
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Object Detection',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: "arlrdbd",
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ObjectDetectorView()),
           ),
-        );
-
-      case 5:
-        return InkWell(
-          splashColor: Colors.deepPurple[200],
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => RealTimeDetectionScreen(),
-              ),
-            );
-          },
           child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-              color: Colors.purple[50],
+              border: Border.all(color: Colors.black, width: 0.5),
+              borderRadius: BorderRadius.circular(10.0),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.pets,
-                      size: 30,
-                      color: Colors.brown,
-                    ),
-                    SizedBox(width: 5),
-                    Icon(
-                      Icons.restaurant,
-                      size: 30,
-                      color: Colors.green,
-                    ),
-                    SizedBox(width: 5),
-                    Icon(
-                      Icons.apple,
-                      size: 30,
-                      color: Colors.red,
-                    ),
-                  ],
+                Image.asset(
+                  "assets/images/camera.png",
+                  height: 90,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Icon(Icons.camera_alt,
+                        size: 90, color: Colors.deepPurple);
+                  },
                 ),
-                SizedBox(height: 10),
-                Icon(
-                  Icons.camera_enhance,
-                  size: 45,
-                  color: Colors.deepPurple,
-                ),
-                Container(
-                  height: 45,
-                  width: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.purple[100],
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Real-Time Detection',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: "arlrdbd",
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
+                const Text(
+                  'Object Detection',
+                  style: TextStyle(
+                      fontFamily: "arlrdbd", color: Color(0xFF6DB072)),
                 ),
               ],
             ),

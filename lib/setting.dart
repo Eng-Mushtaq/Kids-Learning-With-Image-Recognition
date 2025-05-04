@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kids_learning/privacypolicy.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Setting extends StatefulWidget {
   @override
@@ -9,148 +10,254 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-  final flutterWebviewPlugin = new PrivacyPolicy();
+  // Settings state
+  bool _notificationsEnabled = true;
+  String _selectedLanguage = 'English';
+  double _speechRate = 0.5;
 
-  _openMap() async {
+  // Open app in Play Store
+  Future<void> _openPlayStore() async {
     const url = "https://play.google.com/store/apps/details?id=" + "";
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      throw 'Could not launch $url';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Could not open Play Store'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
-  // _Share() async{
-  //   FlutterShare.share(title: 'SHare',linkUrl: "https://play.google.com/store/apps/details?id=" + "com.example.kids");
-  // }
+  // Share app
+  void _shareApp() {
+    Share.share(
+      'Check out this amazing Kids Learning app for children!',
+      subject: 'Kids Learning App',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white,
+        title: Text(
+          'Settings',
+          style: TextStyle(color: Colors.white, fontFamily: "arlrdbd"),
         ),
         backgroundColor: Colors.deepPurple[500],
         elevation: 0,
       ),
-      body: Container(
+      body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // App header with logo
             Container(
-              height: size.height * 0.3,
-              child: Stack(
-                children: [
-                  Container(
-                      height: size.height * 0.3 - 27,
-                      decoration: BoxDecoration(
-                          color: Colors.deepPurple[500],
-                          borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(36),
-                              bottomRight: Radius.circular(36))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              "assets/images/logo.png",
-                              width: 100,
-                              height: 100,
-                            ),
-                            const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Kids",
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    fontFamily: "arlrdbd",
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "Learning!",
-                                    style: TextStyle(
-                                      fontSize: 25,
-                                      fontFamily: "arlrdbd",
-                                      color: Color(0xFFF19335),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ],
+              color: Colors.deepPurple[500],
+              child: Container(
+                padding: EdgeInsets.only(bottom: 20),
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple[500],
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(36),
+                    bottomRight: Radius.circular(36),
+                  ),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Image.asset(
+                        "assets/images/logo.png",
+                        width: 80,
+                        height: 80,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Kids",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontFamily: "arlrdbd",
+                            color: Colors.white,
+                          ),
                         ),
-                      )),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            "Learning!",
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontFamily: "arlrdbd",
+                              color: Color(0xFFF19335),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Settings sections
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'App Settings',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.deepPurple,
+                  fontFamily: "arlrdbd",
+                ),
+              ),
+            ),
+
+            // Notifications toggle
+            SwitchListTile(
+              title: Text(
+                'Notifications',
+                style: TextStyle(
+                  fontFamily: "arlrdbd",
+                  fontSize: 16,
+                ),
+              ),
+              subtitle: Text('Enable app notifications'),
+              value: _notificationsEnabled,
+              activeColor: Colors.deepPurple,
+              onChanged: (value) {
+                setState(() {
+                  _notificationsEnabled = value;
+                });
+              },
+            ),
+
+            // Language dropdown
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Language',
+                    style: TextStyle(
+                      fontFamily: "arlrdbd",
+                      fontSize: 16,
+                    ),
+                  ),
+                  DropdownButton<String>(
+                    value: _selectedLanguage,
+                    items: ['English', 'Spanish', 'French', 'German']
+                        .map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (newValue) {
+                      setState(() {
+                        _selectedLanguage = newValue!;
+                      });
+                    },
+                  ),
                 ],
               ),
             ),
+
+            // Speech rate slider
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: InkWell(
-                onTap: () {
-                  return _openMap();
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: const Color(0xFFE4F2E6),
-                      borderRadius: BorderRadius.circular(10)),
-                  height: 80,
-                  width: 300,
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'Rate Us',
-                      textHeightBehavior:
-                          TextHeightBehavior(applyHeightToFirstAscent: true),
-                      style: TextStyle(
-                        color: Color(0xFF5EA763),
-                        fontFamily: "arlrdbd",
-                        fontSize: 20,
-                      ),
-                      textAlign: TextAlign.left,
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Speech Rate',
+                    style: TextStyle(
+                      fontFamily: "arlrdbd",
+                      fontSize: 16,
                     ),
                   ),
-                  alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.all(10),
+                  SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Text('Slow'),
+                      Expanded(
+                        child: Slider(
+                          value: _speechRate,
+                          min: 0.1,
+                          max: 1.0,
+                          divisions: 9,
+                          activeColor: Colors.deepPurple,
+                          onChanged: (value) {
+                            setState(() {
+                              _speechRate = value;
+                            });
+                          },
+                        ),
+                      ),
+                      Text('Fast'),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            Divider(),
+
+            // Rate and Share buttons
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      icon: Icon(Icons.star),
+                      label: Text('Rate Us'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.deepPurple,
+                        side: BorderSide(color: Colors.deepPurple),
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      onPressed: _openPlayStore,
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      icon: Icon(Icons.share),
+                      label: Text('Share App'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.deepPurple,
+                        side: BorderSide(color: Colors.deepPurple),
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      onPressed: _shareApp,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(height: 24),
+
+            // App version
+            Center(
+              child: Text(
+                'Version 2.0.0',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 12,
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: InkWell(
-                onTap: () {
-                  // return _Share();
-                },
-                splashColor: const Color(0xFFF2CF37),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 233, 213, 255),
-                      borderRadius: BorderRadius.circular(10)),
-                  height: 80,
-                  width: 300,
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: const Text(
-                      'Share',
-                      textHeightBehavior:
-                          TextHeightBehavior(applyHeightToFirstAscent: true),
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 119, 2, 158),
-                        fontFamily: "arlrdbd",
-                        fontSize: 20,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  alignment: Alignment.centerLeft,
-                ),
-              ),
-            ),
+            SizedBox(height: 24),
           ],
         ),
       ),

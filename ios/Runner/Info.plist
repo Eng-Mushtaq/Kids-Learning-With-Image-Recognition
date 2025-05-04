@@ -45,5 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs camera access to detect objects in real-time for learning purposes</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app does not require microphone access</string>
 </dict>
 </plist>

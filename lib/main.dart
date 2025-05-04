@@ -8,6 +8,7 @@ import 'bottomnavigation.dart';
 import 'login_screen.dart';
 import 'signup_screen.dart';
 import 'auth_service.dart';
+import 'privacy_policy_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -84,10 +85,11 @@ class _MyAppState extends State<MyApp> {
                 if (snapshot.hasData) {
                   return BottomNav();
                 }
-                return LoginScreen();
+                return const LoginScreen();
               },
             ),
-        '/signup': (context) => SignupScreen(),
+        '/signup': (context) => const SignupScreen(),
+        '/privacy': (context) => PrivacyPolicyPage(),
       },
     );
   }

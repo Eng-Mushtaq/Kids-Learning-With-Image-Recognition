@@ -1,24 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'profile_screen.dart';
 
-class PrivacyPolicy extends StatefulWidget{
-  @override
-  State<PrivacyPolicy> createState() => _PrivacyPolicyState();
-}
-class _PrivacyPolicyState extends State<PrivacyPolicy> {
+// This file is kept for backward compatibility
+// It now simply redirects to the new ProfileScreen
+class PrivacyPolicy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
-        title: Center(child: Text( 'Privacy Policy', style: TextStyle( color: Colors.black),)),
-        backgroundColor: Color(0xFFFEF7F0),
-        elevation: 0,
-      ),
-      body: Center(child: Text('Privacy Policy Screan'),)
-    );
+    return ProfileScreen();
   }
 }

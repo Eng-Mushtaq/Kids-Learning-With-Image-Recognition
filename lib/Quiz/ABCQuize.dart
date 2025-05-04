@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kids_learning/utils/model.dart';
-
+import 'package:kids_learning/components/learning_tracker.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
 
@@ -206,6 +206,23 @@ class ResultSrceen extends StatefulWidget {
 
 class _ResultSrceenState extends State<ResultSrceen> {
   @override
+  void initState() {
+    super.initState();
+    // Track quiz completion
+    _trackQuizCompletion();
+  }
+
+  void _trackQuizCompletion() {
+    // Track quiz progress
+    LearningTracker.trackQuizCompletion(
+      context: context,
+      category: 'alphabet',
+      totalQuestions: questions.length,
+      correctAnswers: widget.score,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
@@ -235,7 +252,27 @@ class _ResultSrceenState extends State<ResultSrceen> {
             "${widget.score}",
             style: TextStyle(
                 color: Colors.black, fontFamily: "arlrdbd", fontSize: 80.0),
-          ))
+          )),
+          SizedBox(
+            height: 50.0,
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.deepPurple,
+              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              "Back to Quiz",
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: "arlrdbd",
+                fontSize: 18,
+              ),
+            ),
+          ),
         ],
       ),
     );

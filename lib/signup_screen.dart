@@ -31,18 +31,26 @@ class _SignupScreenState extends State<SignupScreen> {
     setState(() => _isLoading = true);
 
     try {
-      await _authService.signUpWithEmailAndPassword(
+      final userCredential = await _authService.signUpWithEmailAndPassword(
         _emailController.text.trim(),
         _passwordController.text.trim(),
       );
-      // Navigation will be handled by the auth state listener
+
+      if (userCredential != null && mounted) {
+        // Explicitly navigate to home screen after successful signup
+        Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+      }
     } catch (e) {
-      MotionToast.error(
-        title: const Text("Error"),
-        description: Text(e.toString()),
-      ).show(context);
+      if (mounted) {
+        MotionToast.error(
+          title: const Text("Error"),
+          description: Text(e.toString()),
+        ).show(context);
+      }
     } finally {
-      setState(() => _isLoading = false);
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     }
   }
 

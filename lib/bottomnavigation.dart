@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'homeScreen.dart';
-import 'privacypolicy.dart';
+import 'profile_screen.dart';
 import 'setting.dart';
 
 class BottomNav extends StatefulWidget {
@@ -15,7 +15,7 @@ class _BottomNavState extends State<BottomNav> {
   static final List<Widget> _pages = <Widget>[
     Setting(),
     const HomeScreen(),
-    PrivacyPolicy(),
+    ProfileScreen(),
   ];
   void _onItemTapped(int index) {
     setState(() {
@@ -31,20 +31,26 @@ class _BottomNavState extends State<BottomNav> {
         selectedItemColor: const Color.fromARGB(255, 113, 0, 173),
         selectedIconTheme:
             const IconThemeData(color: Color.fromARGB(255, 150, 76, 230)),
-        currentIndex: _selectedIndex, //New
+        currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Setting',
+            icon: Icon(Icons.settings_outlined),
+            activeIcon: Icon(Icons.settings),
+            label: 'Settings',
+            tooltip: 'App Settings',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
+            activeIcon: Icon(Icons.home),
             label: 'Home',
+            tooltip: 'Home Screen',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.privacy_tip_outlined),
-            label: 'Privacy',
+            icon: Icon(Icons.person_outline),
+            activeIcon: Icon(Icons.person),
+            label: 'Profile',
+            tooltip: 'User Profile',
           ),
         ],
       ),

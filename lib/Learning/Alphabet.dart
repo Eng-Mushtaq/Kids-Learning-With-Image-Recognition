@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kids_learning/Alphabetssound/Alphasound.dart';
 import 'package:kids_learning/utils/model.dart';
+import 'package:kids_learning/components/learning_tracker.dart';
 
 class Alphabet extends StatefulWidget {
   @override
@@ -11,6 +12,26 @@ class Alphabet extends StatefulWidget {
 List<Numbermodel> kidslist = KidsList1();
 
 class _AlphabetState extends State<Alphabet> {
+  // Set to track which items have been viewed
+  final Set<int> _viewedItems = {};
+
+  @override
+  void initState() {
+    super.initState();
+    // Update progress when the screen is loaded
+    _updateProgress();
+  }
+
+  // Update learning progress
+  void _updateProgress() {
+    LearningTracker.trackLessonProgress(
+      context: context,
+      category: 'alphabet',
+      totalItems: kidslist.length,
+      completedItems: _viewedItems.length,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,12 +62,21 @@ class _AlphabetState extends State<Alphabet> {
               return InkWell(
                 splashColor: Colors.deepPurple[200],
                 onTap: () {
-                  print(kidslist);
+                  // Add to viewed items
+                  setState(() {
+                    _viewedItems.add(index);
+                  });
+
+                  // Update progress
+                  _updateProgress();
+
+                  // Navigate to the sound page
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AlphaSound(index),
-                      ));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AlphaSound(index),
+                    ),
+                  );
                 },
                 child: Card(
                   color: Colors.purple[50],
