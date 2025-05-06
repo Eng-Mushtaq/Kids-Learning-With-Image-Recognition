@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:flutter/foundation.dart';
 import 'firebase_options.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'bottomnavigation.dart';
@@ -17,6 +19,36 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  
+  // Initialize Firebase App Check based on environment
+  try {
+    if (kDebugMode) {
+      // Use debug providers during development
+      await FirebaseAppCheck.instance.activate(
+        androidProvider: AndroidProvider.debug,
+        appleProvider: AppleProvider.debug,
+      );
+    } else {
+      // Use secure providers in production
+      await FirebaseAppCheck.instance.activate(
+        androidProvider: AndroidProvider.playIntegrity,
+        appleProvider: AppleProvider.appAttest,
+      );
+    }
+  } catch (e) {
+    // If App Check activation fails, log the error but continue app initialization
+    print('Error initializing Firebase App Check: $e');
+    // Try with debug provider as fallback
+    try {
+      await FirebaseAppCheck.instance.activate(
+        androidProvider: AndroidProvider.debug,
+        appleProvider: AppleProvider.debug,
+      );
+    } catch (_) {
+      // Continue even if this fails
+    }
+  }
+  
   runApp(MyApp());
 }
 
@@ -80,11 +112,19 @@ class _MyAppState extends State<MyApp> {
               stream: _authService.authStateChanges,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Scaffold(
+                    body: Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.deepPurple,
+                      ),
+                    ),
+                  );
                 }
                 if (snapshot.hasData) {
+                  // User is signed in
                   return BottomNav();
                 }
+                // User is not signed in
                 return const LoginScreen();
               },
             ),

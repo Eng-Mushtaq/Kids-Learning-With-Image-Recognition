@@ -44,21 +44,22 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  Future<void> _signInWithGoogle() async {
-    setState(() => _isLoading = true);
+  // Future<void> _signInWithGoogle() async {
+  //   setState(() => _isLoading = true);
 
-    try {
-      await _authService.signInWithGoogle();
-      // Navigation will be handled by the auth state listener
-    } catch (e) {
-      MotionToast.error(
-        title: const Text("Error"),
-        description: Text(e.toString()),
-      ).show(context);
-    } finally {
-      setState(() => _isLoading = false);
-    }
-  }
+  //   try {
+  //     await _authService.signInWithGoogle();
+  //     // Navigation will be handled by the auth state listener
+  //   } catch (e) {
+  //     MotionToast.error(
+  //       title: const Text("Error"),
+  //       description: Text(e.toString()),
+  //     ).show(context);
+  //   } finally {
+  //     setState(() => _isLoading = false);
+  //   }
+  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -155,11 +156,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 16),
                   OutlinedButton.icon(
-                    onPressed: _isLoading ? null : _signInWithGoogle,
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      side: const BorderSide(color: Colors.deepPurple),
-                    ),
+                    onPressed:(){},
+                    //  _isLoading ? null : _signInWithGoogle,
+                    // style: OutlinedButton.styleFrom(
+                    //   padding: const EdgeInsets.symmetric(vertical: 16),
+                    //   side: const BorderSide(color: Colors.deepPurple),
+                    // ),
                     icon: Image.asset(
                       'assets/images/google_logo.png',
                       height: 24,

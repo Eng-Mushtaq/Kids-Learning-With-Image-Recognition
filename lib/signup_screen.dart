@@ -31,21 +31,44 @@ class _SignupScreenState extends State<SignupScreen> {
     setState(() => _isLoading = true);
 
     try {
+      // First check for internet connectivity
       final userCredential = await _authService.signUpWithEmailAndPassword(
         _emailController.text.trim(),
         _passwordController.text.trim(),
       );
 
       if (userCredential != null && mounted) {
-        // Explicitly navigate to home screen after successful signup
+        // Successful signup - navigate to home screen
         Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
       }
     } catch (e) {
       if (mounted) {
-        MotionToast.error(
-          title: const Text("Error"),
-          description: Text(e.toString()),
-        ).show(context);
+        if (e.toString().contains('Email is already in use')) {
+          // Email already exists but user might want to login instead
+          MotionToast.error(
+            title: const Text("Account Exists"),
+            description: const Text("This email is already registered. Please sign in instead."),
+          ).show(context);
+          
+          // Optional: navigate to login after a delay
+          Future.delayed(const Duration(seconds: 2), () {
+            if (mounted) {
+              Navigator.pop(context); // Go back to login screen
+            }
+          });
+        } else if (e.toString().contains('network')) {
+          // Network error
+          MotionToast.error(
+            title: const Text("Network Error"),
+            description: const Text("Please check your internet connection and try again."),
+          ).show(context);
+        } else {
+          // Handle other errors
+          MotionToast.error(
+            title: const Text("Sign Up Failed"),
+            description: Text(e.toString()),
+          ).show(context);
+        }
       }
     } finally {
       if (mounted) {

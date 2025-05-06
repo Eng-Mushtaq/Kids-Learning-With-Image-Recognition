@@ -45,6 +45,8 @@ dependencies:
   firebase_core: any
   firebase_auth: any
   google_sign_in: any
+  firebase_app_check: ^0.2.1+5
+  recaptcha_enterprise_flutter: ^18.4.0
   share_plus: ^11.0.0
   cloud_firestore: ^4.13.1
   firebase_storage: ^11.5.1
